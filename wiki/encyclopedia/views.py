@@ -1,5 +1,6 @@
 from cProfile import label
 from random import randint
+import random
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
@@ -9,13 +10,12 @@ from . import util
 
 markdowner = Markdown()
 
-
 class NewEntryForm(forms.Form):
     new_title = forms.CharField(label="Entry title")
-    new_body = forms.CharField(widget=forms.Textarea)
+    new_body = forms.CharField(widget=forms.Textarea, label='')
 
 class EditEntryForm(forms.Form):
-    edit_body = forms.CharField(widget=forms.Textarea)
+    edit_body = forms.CharField(widget=forms.Textarea,label='')
 
 def index(request):
     if request.method=="POST":
@@ -30,7 +30,8 @@ def index(request):
 
     else:
         return render(request, "encyclopedia/index.html", {
-            "entries": util.list_entries()
+            "entries": util.list_entries(),
+            "random_title": util.list_entries()[randint(0, len(util.list_entries())-1)]
         })
 
 def search_results(request, search_term):
@@ -44,11 +45,9 @@ def search_results(request, search_term):
         "matching_results": matching_results
     })
 
-def rand_entry(request):
+def random_entry(request):
     title = util.list_entries()[randint(0, len(util.list_entries())-1)]
-    return render(request, "wiki/entry.html", {
-        "random_entry": title
-    })
+    return HttpResponseRedirect(f"/wiki/{title}")
 
 def render_entry(request, title):
     if util.get_entry(title):
@@ -102,7 +101,8 @@ def edit_entry(request, title):
                 "form": form
             })
     else:
+        f = EditEntryForm(initial={'edit_body': util.get_entry(title)})
         return render(request, "encyclopedia/edit_entry.html", {
             "title": title.capitalize(),
-            "form": EditEntryForm()
+            "form": f
         })
