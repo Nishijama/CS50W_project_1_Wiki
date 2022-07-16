@@ -1,0 +1,1 @@
+Application Programming Interface - is a program that aims at connecting two different technologies and allow for easy flow of data between them
