@@ -1,5 +1,7 @@
 {% extends "encyclopedia/layout.html" %}
 
+{% block title %}Edit: {{title}} {% endblock %}
+
 {% block body %}
     <h1>Edit entry: {{ title }}</h1>
 <form action="{% url 'edit_entry' title %}" method="post">

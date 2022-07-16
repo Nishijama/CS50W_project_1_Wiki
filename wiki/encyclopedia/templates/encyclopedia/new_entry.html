@@ -1,5 +1,7 @@
 {% extends "encyclopedia/layout.html" %}
 
+{% block title %}Add new entry{% endblock %}
+
 {% block body %}
     <h1>Add new entry</h1>
 <form action="{% url 'new_entry' %}" method="post">

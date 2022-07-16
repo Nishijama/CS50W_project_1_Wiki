@@ -1,18 +1,17 @@
 {% extends "encyclopedia/layout.html" %}
 
+{% block title %}Search results{% endblock %}
+
 {% block body %}
-
-    <h1>{{ search_tearm }}</h1>
-
+    <h4>We couldn't find: "{{ search_term }}".</h4> 
+    {% if matching_results %}
+    <h4>Did you mean:</h4>
+    {% endif %}
     <ul>
         {% for result in matching_results %}
-
-        <li><a href="/wiki/{{ result }}">{{ result }}</a></li>
-
+            <li><a href="/wiki/{{ result }}">{{ result }}</a></li>
         {% empty %}
-
-        <p>No matches found</p>
-
+            <li>There were no results matching the query.</li>
         {% endfor %}
     </ul>
 
