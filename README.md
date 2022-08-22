@@ -1,4 +1,5 @@
-# CS50W_project_1---Wiki
+#Pokemon Encyclopedia
+CS50 Web Project 1 - Wiki
 
 #### A full stack application allowing users to view, add and edit encyclopedia entries. - wikipedia clone
 
